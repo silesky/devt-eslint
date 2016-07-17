@@ -1,9 +1,29 @@
 require(['eslint'], function (eslint) {
-    //foo is now loaded.
+    // foo is now loaded.
 
-console.log(eslint.verify(
+function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+        var context = this,
+            args = arguments;
+        var later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+}
 
-  ));
+var verify = debounce(function() {
+        var content = editor.getModel().getText();
+        // this is what's up
+        var results = eslint.verify(content, OPTIONS);
+        console.log(results);
+    }, 500);
+
 
 function getOptions() {
   var options = {}, option, key;
@@ -32,6 +52,11 @@ function getOptions() {
 //     chrome.experimental.devtools.console.addMessage(chrome.experimental.devtools.console.Severity.Log, "JSHint: No errors", url);
 //   }
 // }
+
+function validateScript(content) {
+  console.log(content);
+
+};
 
 chrome.devtools.inspectedWindow.onResourceContentCommitted.addListener(function(resource, content) {
   var url = resource.url;
