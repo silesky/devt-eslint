@@ -235,6 +235,7 @@ require([
 
     var verify = debounce(function() {
         var content = editor.getModel().getText();
+        // this is what's up
         var results = eslint.verify(content, OPTIONS);
         displayResults(results);
     }, 500);
