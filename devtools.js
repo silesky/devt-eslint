@@ -10,6 +10,7 @@ function getOptions() {
   return options;
 }
 
+console.log('hi!');
 function validateScript(content, url) {
   var isValid = JSHINT(content, getOptions());
   if (!isValid) {
