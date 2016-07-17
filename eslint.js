@@ -16,6 +16,8 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
 // Public
 //------------------------------------------------------------------------------
 
+var stuff;
+console.log(stuff);
 module.exports = {
     AssignmentExpression: "AssignmentExpression",
     AssignmentPattern: "AssignmentPattern",

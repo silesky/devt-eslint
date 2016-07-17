@@ -1,3 +1,9 @@
+require(['eslint'], function (eslint) {
+    //foo is now loaded.
+
+console.log(eslint.verify(
+
+  ));
 
 function getOptions() {
   var options = {}, option, key;
@@ -10,21 +16,22 @@ function getOptions() {
   return options;
 }
 
-console.log('hi!');
-function validateScript(content, url) {
-  var isValid = JSHINT(content, getOptions());
-  if (!isValid) {
-    JSHINT.errors.forEach(function(error) {
-      if (error === null) {
-        // Why does JSHINT return a null terminated array?
-        return;
-      }
-      chrome.experimental.devtools.console.addMessage(chrome.experimental.devtools.console.Severity.Error, error.reason, url, error.line);
-    });
-  } else {
-    chrome.experimental.devtools.console.addMessage(chrome.experimental.devtools.console.Severity.Log, "JSHint: No errors", url);
-  }
-}
+
+
+// function validateScript(content, url) {
+//   var isValid = JSHINT(content, getOptions());
+//   if (!isValid) {
+//     JSHINT.errors.forEach(function(error) {
+//       if (error === null) {
+//         // Why does JSHINT return a null terminated array?
+//         return;
+//       }
+//       chrome.experimental.devtools.console.addMessage(chrome.experimental.devtools.console.Severity.Error, error.reason, url, error.line);
+//     });
+//   } else {
+//     chrome.experimental.devtools.console.addMessage(chrome.experimental.devtools.console.Severity.Log, "JSHint: No errors", url);
+//   }
+// }
 
 chrome.devtools.inspectedWindow.onResourceContentCommitted.addListener(function(resource, content) {
   var url = resource.url;
@@ -39,4 +46,5 @@ chrome.devtools.panels.create(
     'settings/panel.html',
     null // no callback needed
 );
+});
 
