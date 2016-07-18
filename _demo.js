@@ -1,5 +1,4 @@
-// Code goes here
-
+// from http://eslint.org/demo/
 requirejs.config({
     paths: {
         'text': '//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.12/text',
