@@ -1,6 +1,30 @@
-require(['eslint'], function (eslint) {
+
+
+ const getJSON = (filepath) => {
+    let JSONObj;
+    let xhr = new XMLHttpRequest();
+    // async = true
+    xhr.open('GET', filepath, true);
+    xhr.onload = () => {
+      if (xhr.readyState === 4) {
+        JSONObj = JSON.parse(xhr.responseText);
+      } 
+      else if (xhr.status === 200) {
+        console.error(xhr.statusText);
+        JSONObj = 'null';
+      }
+    };
+    xhr.send(null);
+    return JSONObj;
+ };
+
+
+
+
+require(['eslint'], function(eslint) {
+
     // foo is now loaded. //
-function debounce(func, wait, immediate) {
+/* function debounce(func, wait, immediate) {
     var timeout;
     return function() {
         var context = this,
@@ -14,18 +38,18 @@ function debounce(func, wait, immediate) {
         timeout = setTimeout(later, wait);
         if (callNow) func.apply(context, args);
     };
-}
-
+}*/
+/*
 var verify = debounce(function() {
         var content = editor.getModel().getText();
         // this is what's up
         var results = eslint.verify(content);
         console.log(results);
     }, 500);
-
-
+*/
+/*
 function getOptions() {
-  var options = {}, option, key;
+  var optio ns = {}, option, key;
   for (key in localStorage) {
     if (key.indexOf("settings-") === 0) {
       option = JSON.parse(localStorage[key]);
@@ -34,58 +58,43 @@ function getOptions() {
   }
   return options;
 }
+*/
 
 
-
-// function validateScript(content, url) {
-//   var isValid = JSHINT(content, getOptions());
-//   if (!isValid) {
-//     JSHINT.errors.forEach(function(error) {
-//       if (error === null) {
-//         //  hy does JSHINT return a null terminated array?
-//         return;
-//       }
-//       chrome.experimental.devtools.console.addMessage(chrome.experimental.devtools.console.Severity.Error, error.reason, url, error.line);
-//     });
-//   } else {
-//     chrome.experimental.devtools.console.addMessage(chrome.experimental.devtools.console.Severity.Log, "JSHint: No errors", url);
-//  /  /    }
-// }
-
-
-var config = {
-    "no-alert": 2,
-    "no-array-constructor": 2,
-    "no-bitwise": 2,
-    "no-caller": 2,
-    "no-case-declarations": 2,
-    "no-catch-shadow": 2,
-    "no-class-assign": 2,
-    "no-cond-assign": 2,
-    "no-confusing-arrow": 2,
-    "no-console": 2,
-    "no-const-assign": 2,
-    "no-constant-condition": 2,
-    "no-continue": 2,
-    "no-control-regex": 2,
-    "no-debugger": 2
-};
+/* function validateScript(content, url) {
+  var isValid = JSHINT(conten t, getOptions());
+  if (!isValid) { 
+    JSHINT.errors.forEach(function(error) {
+      if (error === null) {
+        //  hy does JSHINT return a null terminated array?
+        return;
+      }
+      chrome.experimental.devtools.consol e.addMe ssage(chr ome.experimental.devtools.console.Severity.Error, error.reason, url, error.line);
+       
+  } else {
+    chrome.experimental. devtools.console.addMes sage(chr ome.experimental.dev tools.console.Severity.Log, "JSHint: No errors", url);
+ /  /    }
+}
+*/
+    
 
 
-function validate(content, url) {
-  console.log(content);
+function validate(content, config, url) {
+  let hasContent = !!content || !!content.length;
+  console.log(hasContent, 'should be true. content variable should have content');
   const errorObj = eslint.verify(content, config);
   console.log(errorObj); 
-//  chrome.experimental.devtools.consol e.addMessage(chrome.experimental.devtools.console.Severity.Error, obj.reason, url, objline);
+//  chrome.experimenal.devtoo ls.consol e.addMessage(chrome.expe rimental.devtools.console.  Severity.Error, obj.reason, url, objline);
 
 }
-// api.v erify  = funct  ion(textOrSourceCode, config, filenameOrOptions, saveState) {
+// api.verify   = function(te     x t OrSourceCode, config, filenameOrOptions, saveState) {
 
 
 chrome.devtools.inspectedWindow.onResourceContentCommitted.addListener(function(resource, content) {
-  var url = resource.url;
-  if (url.lastIndexOf(".js") === url.length - 3) {
-    validate(content, url);
+  const url = resource.url;
+  if (url.lastIndexOf('.js') === url.length - 3) {
+      const config = getJSON('eslintconfig.json');
+      validate(content, config, url);
   }
 });
 
