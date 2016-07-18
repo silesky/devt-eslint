@@ -53,15 +53,41 @@ function getOptions() {
 //   }
 // }
 
-function validateScript(content) {
-  console.log(content);
 
+var config = {
+    "no-alert": 2,
+    "no-array-constructor": 2,
+    "no-bitwise": 2,
+    "no-caller": 2,
+    "no-case-declarations": 2,
+    "no-catch-shadow": 2,
+    "no-class-assign": 2,
+    "no-cond-assign": 2,
+    "no-confusing-arrow": 2,
+    "no-console": 2,
+    "no-const-assign": 2,
+    "no-constant-condition": 2,
+    "no-continue": 2,
+    "no-control-regex": 2,
+    "no-debugger": 2
 };
+
+
+/* */
+function validate(content) {
+  var obj = eslint.verify(content, config); //make this object.reas
+
+     chrome.experimental.devtools.console.addMessage(chrome.experimental.devtools.console.Severity.Error, obj.reason, url, error.line);
+
+}
+// api.verify = function(textOrSourceCode, config, filenameOrOptions, saveState) {
+
 
 chrome.devtools.inspectedWindow.onResourceContentCommitted.addListener(function(resource, content) {
   var url = resource.url;
   if (url.lastIndexOf(".js") === url.length - 3) {
-    validateScript(content, resource.url);
+    console.log(content);
+    validate(content);
   }
 });
 
