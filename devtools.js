@@ -1,9 +1,10 @@
-const config = {
+ /* globals chrome       */
+const config = { 
     "ecmaFeatures": {
         "arrowFunctions": true,
         "binaryLiterals": false,
         "blockBindings": true,
-        "classes": true,
+        "classes": true,   
         "defaultParams": true,
         "destructuring": true,
         "forOf": true,
@@ -281,6 +282,16 @@ require(['eslint'], (eslint) => {
 
     const displayErrors = (errorObj, url) => {
         console.log(errorObj);
+        // obj should get passed to sidebar.html 
+        chrome.devtools.panels.sources.createSidebarPane("ESLint Errors",  
+            (sidebar) => { 
+                sidebar.setPage("sidebar.html");
+                sidebar.setHeight("8ex");
+                sidebar.setObject(errorObj);
+            } 
+
+        );
+        
         console.log(`url! is: ${url}`);
         //  chrome.experimenal.devtools.consol e.addMessage(chrome.expe rimental.devtools.console.  Severity.Error, obj.reason, url, objline);
     };
