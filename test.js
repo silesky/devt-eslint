@@ -1,10 +1,11 @@
+// code with a lot of linter issues
 var key, 
     settings = [];
  
 for (key in localStorage) {
   if (key.indexOf("settings-") === 0) {
     settings.push(JSON.parse(localStorage[key]));
-  } // //    / /            /  / // 
+  } //   /  /     / /              /  /  // 
 }  
 window.addEventListener(
   "message", 

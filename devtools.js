@@ -267,7 +267,22 @@ const getJSON = (filepath) => {
     xhr.send(null);
     return JSONObj;
 };
+
+
 require(['eslint'], (eslint) => {
+
+// array of objects to object of objects
+    var formatArray = (arr) => {
+        var newObj = {};
+        arr.forEach((el, ind, arr) => {
+          var eachName = "line_" + (el.line).toString();
+          newObj[eachName] = el;
+          delete newObj[eachName]['line'];
+          delete newObj[eachName]['severity'];
+          delete newObj[eachName]['nodeType'];
+        })
+        return newObj;
+    }
     // checks the content and also displays it
     const validate = (content) => {
         let errorObj;
@@ -287,7 +302,7 @@ require(['eslint'], (eslint) => {
             (sidebar) => { 
                 sidebar.setPage("sidebar.html");
                 sidebar.setHeight("8ex");
-                sidebar.setObject(errorObj);
+                sidebar.setObject(formatArray(errorObj));
             } 
 
         );
