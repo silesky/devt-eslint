@@ -270,7 +270,8 @@ const getJSON = (filepath) => {
 
 
 require(['eslint'], (eslint) => {
-
+    const InspectedWindow = chrome.devtools.inspectedWindow;
+    const SourcesPanel = chrome.devtools.panels.sources;
 // array of objects to object of objects
     var formatArray = (arr) => {
         var newObj = {};
@@ -299,7 +300,7 @@ require(['eslint'], (eslint) => {
         console.log(errorObj);
         const filename = url.split('/').pop();
         // obj should get passed to sidebar.html 
-        chrome.devtools.panels.sources.createSidebarPane(`ESLint: ${filename}`,  
+        SourcesPanel.createSidebarPane(`ESLint: ${filename}`,  
             (sidebar) => { 
                 sidebar.setPage("sidebar.html");
                 sidebar.setHeight("8ex");
@@ -308,18 +309,22 @@ require(['eslint'], (eslint) => {
 
         );
         
-        console.log(`url! is: ${url}`);
-        //  chrome.experimenal.devtools.consol e.addMessage(chrome.expe rimental.devtools.console.  Severity.Error, obj.reason, url, objline);
-    };
+        console.log(`url! is: ${url}!`);
+    
+        };
 
-
-    chrome.devtools.inspectedWindow.onResourceContentCommitted.addListener((resource, content) => {
+    // event listener for lint stuf fbelow
+    const lintEvent = (resource, content) => {
         let url = resource.url;
         if (url.lastIndexOf('.js') === url.length - 3) {
             let errorObj = validate(content);
             displayErrors(errorObj, url);
         }
-    });
+    };
+    // fires if user saves or if new file is added
+    InspectedWindow.onResourceContentCommitted.addListener(lintEvent);
+    InspectedWindow.onResourceAdded.addListener(lintEvent);
+    
     chrome.devtools.panels.create('ESLint', null, // No icon path
         'settings/panel.html', null // no callback needed
     );
