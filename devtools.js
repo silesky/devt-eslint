@@ -297,8 +297,9 @@ require(['eslint'], (eslint) => {
 
     const displayErrors = (errorObj, url) => {
         console.log(errorObj);
+        const filename = url.split('/').pop();
         // obj should get passed to sidebar.html 
-        chrome.devtools.panels.sources.createSidebarPane("ESLint Errors",  
+        chrome.devtools.panels.sources.createSidebarPane(`ESLint: ${filename}`,  
             (sidebar) => { 
                 sidebar.setPage("sidebar.html");
                 sidebar.setHeight("8ex");
