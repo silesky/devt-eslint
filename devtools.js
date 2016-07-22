@@ -303,16 +303,16 @@ require(['eslint'], (eslint) => {
         SourcesPanel.createSidebarPane(`ESLint: ${filename}`,  
             (sidebar) => { 
                 sidebar.setPage("sidebar.html");
-                sidebar.setHeight("8ex");
-                sidebar.setObject(formatArray(errorObj));
+                sidebar.setHeight("25ex");
+                //sidebar.setObject(formatArray(errorObj));
             } 
 
         );
-        
+          
         console.log(`url! is: ${url}!`);
-    
+		
         };
-
+    
     // event listener for lint stuf fbelow
     const lintEvent = (resource, content) => {
         let url = resource.url;
@@ -323,7 +323,6 @@ require(['eslint'], (eslint) => {
     };
     // fires if user saves or if new file is added
     InspectedWindow.onResourceContentCommitted.addListener(lintEvent);
-    InspectedWindow.onResourceAdded.addListener(lintEvent);
     
     chrome.devtools.panels.create('ESLint', null, // No icon path
         'settings/panel.html', null // no callback needed

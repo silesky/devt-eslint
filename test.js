@@ -1,12 +1,12 @@
-// code with a lot of linter issues
+// code with a  lot of linter issues
 var key, 
     settings = [];
  
 for (key in localStorage) {
   if (key.indexOf("settings-") === 0) {
-    settings.push(JSON.parse(localStorage[key]));
-  } //   /  /     /  /                  /  /  // 
-}  
+    settings.push(JSON. parse(localStorage[key]));
+  } //   /   /           /    /                     /  /  // 
+}   
 window.addEventListener(
   "message", 
   function(event) {
@@ -19,10 +19,10 @@ window.addEventListener(
       } else {
          $.get("../jshint.js").done(function(data, status, jqxhr) {
           appWindow.postMessage({ settingsText: jqxhr.responseText }, "*");
-        });
-      }
-    } 
-  },
+        }); 
+      }   
+    }    
+  },  
   false
-);  
-   s 
+);     
+   s              
