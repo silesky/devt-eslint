@@ -5,10 +5,10 @@ var key,
 for (key in localStorage) {
   if (key.indexOf("settings-") === 0) {
     settings.push(JSON. parse(localStorage[key]));
-  } //   /   /           /    /                     /  /  // 
-}   
+  } //   /    /                  /    /                     /  /  // 
+}    
 window.addEventListener(
-  "message", 
+  "message",  
   function(event) {
     var appWindow = document.getElementById("app").contentWindow;
     if (event.data.key && event.data.value) {
