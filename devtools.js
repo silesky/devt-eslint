@@ -1,4 +1,5 @@
  /* globals chrome       */
+//http://stackoverflow.com/questions/14265880/content-script-to-devtools-js-to-my-new-panel
 const config = { 
     "ecmaFeatures": {
         "arrowFunctions": true,
@@ -310,6 +311,9 @@ require(['eslint'], (eslint) => {
         );
           
         console.log(`url! is: ${url}!`);
+        chrome.extension.sendMessage({greeting: "hello"}, function(response) {
+                console.log(response.farewell);
+        });
 		
         };
     
@@ -319,6 +323,9 @@ require(['eslint'], (eslint) => {
         if (url.lastIndexOf('.js') === url.length - 3) {
             let errorObj = validate(content);
             displayErrors(errorObj, url);
+            console.log('suuup');
+            chrome.runtime.sendMessage(errorObj); 
+        
         }
     };
     // fires if user saves or if new file is added

@@ -7,9 +7,21 @@
   "homepage_url": "https://github.com/mrpotes/jshint-extension",
   "icons": {"128": "jshint-icon.png"},
   "permissions":  [
-    "experimental"
+    "tabs"
   ],
-  "sandbox": {
-    "pages": ["settings/sandbox.html"]
-  }
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "sidebar.js"
+      ]
+    }
+  ]
 }
